@@ -1,3 +1,5 @@
+import binascii
+
 def KSA(key):
     """
     Key-Scheduling Algorithm (KSA) for RC4.
@@ -78,12 +80,29 @@ def detect_same_keystream(ciphertext1, ciphertext2):
 
 # Example usage
 key = "secretkey"
+key1 = "secretkey1"
 plaintext1 = "Hello, World!"
 plaintext2 = "Goodbye, World!"
+plaintext3 = "Hello, Universe!"
 
 ciphertext1 = RC4(key, plaintext1)
 ciphertext2 = RC4(key, plaintext2)
+ciphertext3 = RC4(key1, plaintext3)
+
+print("Plaintext 1:", plaintext1)
+print("Plaintext 2:", plaintext2)
+print("Plaintext 3:", plaintext3)
+
+print()
+
+print("Ciphertext 1:", binascii.hexlify(ciphertext1.encode()).decode())
+print("Ciphertext 2:", binascii.hexlify(ciphertext2.encode()).decode())
+print("Ciphertext 3:", binascii.hexlify(ciphertext3.encode()).decode())
+
+print()
 
 result = detect_same_keystream(ciphertext1, ciphertext2)
-print("Same keystream used:", result)
+print("Same keystream used for plaintext1 and plaintext2:", result)
 
+result = detect_same_keystream(ciphertext1, ciphertext3)
+print("Same keystream used for plaintext1 and plaintext3:", result)
